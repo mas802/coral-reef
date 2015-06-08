@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<style>
+body {
+	/* background-image: url('../images/bg'); */
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	font-size: 12pt;
+	margin: auto;
+	padding: 3%;
+	height: 100%;
+}
+
+.table {
+	display: table;
+}
+
+.table>* {
+	display: table-row;
+}
+
+.table>*>* {
+	display: table-cell;
+}
+</style>
+</head>
+<body>
+
+	<h1>Coral Reef Edit: $coral.getName()</h1>
+
+	<a href="../admin/corals">back</a>
+
+	<form action="../admin/edit" method="post">
+		<input type="hidden" name="name" value="$!coral.name" />
+		<textarea name="properties" rows="20" cols="60">$!coral.properties</textarea>
+		<input type="submit" name="save" value="save" />
+	</form>
+
+	#foreach($run in $coral.getRunList())
+	<span>$run.getTimestamp()</span>&nbsp; #end
+
+	<form action="../admin/copy" method="post">
+		<input type="hidden" name="name" value="$!coral.name" /> <input
+			type="text" name="newname" value="" /> <input type="submit"
+			name="copy" value="copy" />
+	</form>
+
+</body>
+</html>

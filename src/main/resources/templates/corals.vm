@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<style>
+body {
+	/* background-image: url('../images/bg'); */
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	font-size: 12pt;
+	margin: auto;
+	padding: 3%;
+	height: 100%;
+}
+
+h1 {
+	color: #000043;
+}
+
+.table {
+	display: table;
+	width: 80%;
+	max-width: 800px;
+	/* margin: 20px auto; */
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.table>* {
+	display: table-row;
+}
+
+.table>*>* {
+	display: table-cell;
+	padding: 2px;
+	vertical-align: center;
+	border-bottom: 1px solid #333333;
+}
+</style>
+</head>
+<body>
+
+	<h1>Coral Reef Managment</h1>
+
+	<div>
+		<a href="../admin/corals">reload</a>
+	</div>
+
+	<div class="table">
+		#foreach( $m in $coralInfos )
+		<div>
+			#*
+			<div>
+				<img src="../assets/images/CORAL_ICON.png" width="32px"
+					height="32px" />
+			</div>
+			*#
+			<div>$m.coral.name</div>
+			#if ( $m.coral.getStart() )
+			<div>
+				<a href="../admin/stop?name=$m.coral.name">stop </a>
+			</div>
+			<div>
+				#if ( "$m.info.debug" == "true" ) ON #else OFF #end <a
+					href="../admin/debug?on">on</a> <a href="/admin/debug?off">off</a>
+			</div>
+			<div>$!m.info.hoststr</div>
+			<div>
+				<a target="_blank" href="$!{m.info.hoststr}$!{m.info.start}">$!m.info.start</a>
+			</div>
+			<div>$!m.info.refresh</div>
+			<div>
+				<a target="_blank"
+					href="$!{m.info.hoststr}$!{m.info.server}/servervm/info.vm">$!m.info.server</a>
+			</div>
+			#else
+			<div>
+				<a href="../admin/start?name=$m.coral.name">start </a>
+			</div>
+			<div>
+				<a href="../admin/edit?name=$m.coral.name">[edit]</a>
+			</div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			#end
+		</div>
+		#end
+	</div>
+
+	<div>
+		<form action="../admin/edit" method="post">
+			<input id="addCoral" type="text" name="name" value="" /> <input
+				type="submit" name="add" value="add" />
+		</form>
+	</div>
+</body>
+</html>
