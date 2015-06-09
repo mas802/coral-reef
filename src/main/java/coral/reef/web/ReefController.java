@@ -16,8 +16,11 @@
 package coral.reef.web;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -87,6 +91,16 @@ public class ReefController {
 
         if (cb == null) {
             cb = new CoralBean();
+            String content;
+            try {
+                Scanner scan = new Scanner(new ClassPathResource(
+                        "reef.default.properties").getInputStream());
+                scan.useDelimiter("\\Z");
+                content = scan.next();
+                cb.setProperties(content);
+            } catch (IOException e) {
+                content = e.getMessage();
+            }
             cb.setName(name);
         }
 
