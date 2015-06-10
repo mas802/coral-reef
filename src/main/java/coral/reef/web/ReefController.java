@@ -85,6 +85,7 @@ public class ReefController {
     public String edit(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "properties", required = false) String properties,
+            @RequestParam(value = "basepath", required = false) String basepath,
             Map<String, Object> model) {
 
         CoralBean cb = coralBeanRepository.findOne(name);
@@ -107,6 +108,14 @@ public class ReefController {
         if (properties != null) {
             cb.setProperties(properties);
         }
+        
+        
+        if (  basepath != null ) {
+            String prop = cb.getProperties();
+            prop = prop.replaceFirst("[#]?(\\s*?)exp.basepath = (.*?)\n", "# exp.basepath = "+basepath+"\n");
+            cb.setProperties( prop );
+        }
+        
         coralBeanRepository.save(cb);
 
         model.put("coral", cb);
