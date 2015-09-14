@@ -102,8 +102,10 @@ public class ReefHandler implements ExpHandler {
 
     public Integer addClient(Integer clientId) {
         if (clientId == null) {
-            clientcount = dataService.getNewId(clientcount + 1);
-            clientId = clientcount;
+            synchronized (dataService) {
+                clientcount = dataService.getNewId(clientcount + 1);
+                clientId = clientcount;
+            }
         }
         service.addClient(clientId);
 
